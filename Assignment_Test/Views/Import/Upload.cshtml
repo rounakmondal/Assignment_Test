@@ -1,0 +1,30 @@
+﻿@{
+    ViewBag.Title = "Upload Customer Data";
+}
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-primary text-white text-center py-3">
+                    <h4 class="mb-0"><i class="fas fa-file-upload"></i> Upload Customer Data</h4>
+                </div>
+                <div class="card-body p-4">
+                    @using (Html.BeginForm("Upload", "Import", FormMethod.Post, new { enctype = "multipart/form-data", @class = "needs-validation", novalidate = "true" }))
+                    {
+                        <div class="mb-3 text-center">
+                            <label for="fileUpload" class="form-label fw-bold">Choose Excel File</label>
+                            <input type="file" id="fileUpload" name="file" class="form-control" accept=".xls,.xlsx" required />
+                        </div>
+                        <div class="text-center mt-3">
+                            <button type="submit" class="btn btn-success fw-bold px-4 py-2">
+                                <i class="fas fa-upload"></i> Upload
+                            </button>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

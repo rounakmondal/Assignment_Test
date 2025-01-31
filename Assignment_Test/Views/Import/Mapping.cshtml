@@ -1,0 +1,55 @@
+﻿@model Assignment_Test.Models.MappingViewModel
+
+@{
+    ViewBag.Title = "Map Excel Columns";
+}
+
+<div class="container mt-5">
+    <div class="card shadow-lg p-4">
+        <h2 class="text-center text-primary mb-4">Map Database Fields to Excel Columns</h2>
+
+        @using (Html.BeginForm("ImportData", "Import", FormMethod.Post, new { @class = "needs-validation", novalidate = "true" }))
+        {
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                    <thead class="table-primary text-center">
+                        <tr>
+                            <th>Database Field</th> <!-- Fixed left column -->
+                            <th>Excel Column</th>   <!-- Dropdown right column -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var dbField in Model.DatabaseFields.Where(f => f.ToLower() != "id"))
+                        {
+                            <tr>
+                                <!-- Fixed Database Field -->
+                                <td class="align-middle fw-bold">@dbField</td>
+
+                              
+                                <td>
+                                    @Html.DropDownListFor(
+                                        m => m.Mappings[dbField],  // Bind to database field as key
+                                        new SelectList(
+                                            Model.ExcelHeaders
+                                                .Where(h => h.ToLower() != "id")
+                                                .Select(h => new { Value = h, Text = h }),
+                                            "Value",
+                                            "Text"),
+                                        "- Select Excel Column -",
+                                        new { @class = "form-select" }
+                                    )
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="text-center mt-4">
+                <button type="submit" class="btn btn-success px-4 py-2 fw-bold">
+                    <i class="fas fa-upload"></i> Import Data
+                </button>
+            </div>
+        }
+    </div>
+</div>
